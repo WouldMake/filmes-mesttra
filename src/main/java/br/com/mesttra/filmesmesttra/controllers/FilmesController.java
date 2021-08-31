@@ -4,6 +4,9 @@ import br.com.mesttra.filmesmesttra.CategoriaRepository;
 import br.com.mesttra.filmesmesttra.FilmeRepository;
 import br.com.mesttra.filmesmesttra.model.FilmeEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +20,13 @@ public class FilmesController {
     private final CategoriaRepository categoriaRepository;
 
     @GetMapping
-    public List<FilmeEntity> findAll(){
+    public List<FilmeEntity> findAll(@RequestParam(value = "pageSize", required = false) Integer pageSize,
+                                     @RequestParam(value = "pageIndex", required = false) Integer pageIndex){
+        if(pageSize != null && pageIndex != null){
+            return filmeRepository.findAll(
+                    PageRequest.of(pageIndex, pageSize, Sort.by("titulo"))
+            ).getContent();
+        }
         return filmeRepository.findAll();
     }
 
@@ -35,6 +44,14 @@ public class FilmesController {
     public FilmeEntity save(@RequestBody FilmeEntity filmeEntity){
         return filmeRepository.save(filmeEntity);
     }
+
+    @DeleteMapping
+    public void delete(Long filmeId){
+        filmeRepository.deleteById(filmeId);
+    }
+
+
+
 
 
 
