@@ -1,11 +1,9 @@
 package br.com.mesttra.filmesmesttra.controllers;
 
-import br.com.mesttra.filmesmesttra.CategoriaRepository;
-import br.com.mesttra.filmesmesttra.FilmeRepository;
 import br.com.mesttra.filmesmesttra.model.FilmeEntity;
+import br.com.mesttra.filmesmesttra.repositories.FilmeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,15 +15,13 @@ import java.util.List;
 public class FilmesController {
 
     private final FilmeRepository filmeRepository;
-    private final CategoriaRepository categoriaRepository;
 
     @GetMapping
     public List<FilmeEntity> findAll(@RequestParam(value = "pageSize", required = false) Integer pageSize,
                                      @RequestParam(value = "pageIndex", required = false) Integer pageIndex){
         if(pageSize != null && pageIndex != null){
             return filmeRepository.findAll(
-                    PageRequest.of(pageIndex, pageSize, Sort.by("titulo"))
-            ).getContent();
+                    PageRequest.of(pageIndex, pageSize, Sort.by("titulo"))).getContent();
         }
         return filmeRepository.findAll();
     }
