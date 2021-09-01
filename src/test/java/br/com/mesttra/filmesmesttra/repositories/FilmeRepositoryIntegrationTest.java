@@ -41,6 +41,11 @@ class FilmeRepositoryIntegrationTest {
         assertThat(filmes).hasSize(2);
     }
 
-
+    @Test
+    @Sql("classpath:add2MoviesWithPalavraChave100.sql")
+    public void shouldReturnFilmesByPalavraChave(){
+        List<FilmeEntity> filmes = filmeRepository.findByPalavrasChave("TESTE");
+        assertThat(filmes).hasSize(2);
+    }
 
 }
