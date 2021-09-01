@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FilmeRepository extends JpaRepository<FilmeEntity, Long> {
 
-    List<FilmeEntity> findByTitulo(String titulo);
+    Optional<FilmeEntity> findByTitulo(String titulo);
 
     List<FilmeEntity> findByCategoria_Id(Long idCategoria);
 
