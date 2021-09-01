@@ -1,5 +1,6 @@
 package br.com.mesttra.filmesmesttra.repositories;
 
+import br.com.mesttra.filmesmesttra.FilmeEntityFactory;
 import br.com.mesttra.filmesmesttra.model.FilmeEntity;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -22,8 +23,12 @@ class FilmeRepositoryIntegrationTest {
     public void clean(){}
 
     @Test
-    @Sql("classpath:addSenhorDosAneis.sql")
+    //@Sql("classpath:addSenhorDosAneis.sql")
     public void shouldFindFilmeByTitulo(){
+        FilmeEntity filmeEntity = FilmeEntityFactory.getInstance()
+                .titulo("O Titulo Que Importa")
+                .build();
+
         assertThat(filmeRepository.findByTitulo("Senhor dos Aneis").isPresent())
                 .isTrue();
     }
